@@ -1,0 +1,9 @@
+{
+  "formatting": { "command": "alejandra" },
+  "eval": {
+    "target": {
+      "args": ["-f", "default.nix"],
+      "installable": ""
+    }
+  }
+}
