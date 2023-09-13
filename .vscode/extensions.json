@@ -1,7 +1,3 @@
 {
-  "recommendations": [
-    "editorconfig.editorconfig",
-    "jnoortheen.nix-ide",
-    "mkhl.direnv"
-  ]
+  "recommendations": ["editorconfig.editorconfig", "jnoortheen.nix-ide", "mkhl.direnv", "sclu1034.justfile"]
 }

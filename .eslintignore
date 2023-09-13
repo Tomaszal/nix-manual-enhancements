@@ -1,4 +1,3 @@
 .direnv
-dependency-graph.svg
 dist
 node_modules

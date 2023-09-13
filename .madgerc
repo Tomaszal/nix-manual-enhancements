@@ -1,0 +1,19 @@
+{
+  "baseDir": "./",
+  "excludeRegExp": [
+    ".direnv\\/.*",
+    "dist\\/.*",
+    "node_modules"
+  ],
+  "fileExtensions": [
+    "ts",
+    "tsx"
+  ],
+  "tsConfig": {
+    "compilerOptions": {
+      "module": "ESNext",
+      "moduleResolution": "Node",
+      "baseUrl": "."
+    }
+  }
+}

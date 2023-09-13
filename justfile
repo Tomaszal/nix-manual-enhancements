@@ -18,3 +18,22 @@ dev:
 # Build for production
 build:
   bunx --bun vite build
+
+# Generate a dependency graph using Madge
+gen-dep-graph *OPTIONS:
+  bun madge . --warning --image dependency-graph.svg {{OPTIONS}}
+
+# Verify code and repository conventions
+@lint:
+  echo 'Checking ESLint rules...'
+  bun eslint .
+  echo 'All matched files comply with ESLint rules!'
+  echo
+  bun prettier --check .
+  echo
+  echo 'Checking for circular dependencies using Madge...'
+  bun madge . --circular
+  echo 'Checking Nix formatting...'
+  git ls-files '*.nix' | xargs alejandra --check
+  echo
+  echo 'Success! No linting errors found.'

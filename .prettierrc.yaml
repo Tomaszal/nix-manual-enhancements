@@ -1,0 +1,22 @@
+# Indentation
+tabWidth: 2
+useTabs: false
+
+# Word wrap
+printWidth: 120
+
+# Line endings
+semi: true
+trailingComma: all
+
+# Brackets
+bracketSameLine: false
+bracketSpacing: true
+
+# Parentheses
+arrowParens: always
+
+# Quotation
+singleQuote: true
+jsxSingleQuote: true
+quoteProps: as-needed

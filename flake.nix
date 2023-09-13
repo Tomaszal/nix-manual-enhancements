@@ -18,6 +18,7 @@
         devShells.default = pkgs.mkShell {
           nativeBuildInputs = with pkgs; [
             just
+            graphviz
 
             # Nix tools
             nixd
@@ -25,6 +26,7 @@
 
             # JS tools
             bun
+            nodejs # https://github.com/oven-sh/bun/issues/4591
           ];
         };
       };
