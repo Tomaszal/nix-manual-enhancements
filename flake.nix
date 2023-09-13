@@ -17,6 +17,8 @@
       perSystem = {pkgs, ...}: {
         devShells.default = pkgs.mkShell {
           nativeBuildInputs = with pkgs; [
+            just
+
             # Nix tools
             nixd
             alejandra
