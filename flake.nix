@@ -20,6 +20,9 @@
             # Nix tools
             nixd
             alejandra
+
+            # JS tools
+            bun
           ];
         };
       };
