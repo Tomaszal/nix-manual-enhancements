@@ -17,7 +17,11 @@ dev:
 
 # Build for production
 build:
-  bunx --bun vite build
+  NODE_ENV=production bunx --bun vite build
+
+# Preview production build
+preview:
+  bunx --bun vite preview
 
 # Generate a dependency graph using Madge
 gen-dep-graph *OPTIONS:

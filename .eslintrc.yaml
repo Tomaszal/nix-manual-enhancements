@@ -1,7 +1,7 @@
 root: true
 env:
   browser: true
-  es2020: true
+  es2021: true
 extends:
   - eslint:recommended
   - plugin:@typescript-eslint/strict-type-checked
@@ -28,3 +28,7 @@ rules:
   'react-refresh/only-export-components':
     - warn
     - allowConstantExport: true
+
+  '@typescript-eslint/consistent-type-definitions':
+    - error
+    - type

@@ -1,0 +1,96 @@
+body {
+  display: grid;
+  grid-template-areas: 'header header' 'toc navbar' 'toc content' 'toc footer';
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto 1fr auto;
+}
+
+header {
+  position: sticky !important;
+  top: 0;
+  margin-bottom: 0 !important;
+  grid-area: header;
+  box-shadow: none !important;
+}
+
+footer {
+  grid-area: footer;
+}
+
+#navbar {
+  border-bottom: 0.0625rem solid rgba(0, 0, 0, 0.2);
+
+  font-size: 18px;
+  text-align: center;
+  line-height: 46px;
+}
+
+#toc {
+  position: sticky;
+  top: var(--header-height);
+  grid-area: toc;
+  height: calc(100vh - var(--header-height));
+  width: 300px;
+  overflow: auto;
+
+  background: #fafafa;
+  color: black;
+  border-right: 0.0625rem solid rgba(0, 0, 0, 0.2);
+
+  padding: 1.25rem 1rem;
+  font-size: 14px;
+  word-break: break-word;
+}
+
+#toc ol {
+  padding-left: 20px;
+  list-style: none outside none;
+}
+
+#toc > ol {
+  padding-left: 0;
+}
+
+#toc a {
+  color: black;
+  border-bottom: none;
+}
+
+#toc a[data-selected='true'],
+#toc a:hover {
+  color: #1f1fff;
+}
+
+#toc a[data-empty='true'] {
+  color: black;
+}
+
+#toc a[data-selected='true'],
+#toc a[data-empty='true'] {
+  cursor: default;
+  pointer-events: none;
+}
+
+#content {
+  grid-area: content;
+  overflow: auto;
+  margin-top: 0;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+#content * {
+  /* Fix anchor link snapping */
+  scroll-margin-top: var(--header-height);
+}
+
+footer {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+main,
+.docbook-page,
+.docbook {
+  display: contents;
+}
