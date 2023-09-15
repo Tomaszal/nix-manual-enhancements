@@ -1,5 +1,5 @@
 {
-  description = "Nix Manual Wrapper";
+  description = "Nix Manual Enhancements";
 
   inputs = {
     nixpkgs.url = github:NixOS/nixpkgs/nixos-unstable;
