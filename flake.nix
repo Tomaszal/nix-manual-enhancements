@@ -19,6 +19,7 @@
           nativeBuildInputs = with pkgs; [
             just
             graphviz
+            cocogitto
 
             # Nix tools
             nixd

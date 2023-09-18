@@ -29,6 +29,8 @@ gen-dep-graph *OPTIONS:
 
 # Verify code and repository conventions
 @lint:
+  echo 'Checking conventional commit compliance...'
+  cog check
   echo 'Checking ESLint rules...'
   bun eslint .
   echo 'All matched files comply with ESLint rules!'
