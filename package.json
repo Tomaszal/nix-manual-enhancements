@@ -1,6 +1,6 @@
 {
   "name": "nix-manual-enhancements",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
   "dependencies": {
     "jotai": "^2.4.2",
