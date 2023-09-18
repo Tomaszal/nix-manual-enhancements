@@ -15,10 +15,9 @@
     flake-parts.lib.mkFlake {inherit inputs;} {
       systems = ["x86_64-linux"];
       perSystem = {pkgs, ...}: {
-        devShells.default = pkgs.mkShell {
-          nativeBuildInputs = with pkgs; [
+        devShells = let
+          essentials = with pkgs; [
             just
-            graphviz
             cocogitto
 
             # Nix tools
@@ -29,6 +28,12 @@
             bun
             nodejs # https://github.com/oven-sh/bun/issues/4591
           ];
+        in {
+          default = pkgs.mkShell {
+            nativeBuildInputs = essentials ++ (with pkgs; [graphviz]);
+          };
+
+          ci = pkgs.mkShell {nativeBuildInputs = essentials;};
         };
       };
     };

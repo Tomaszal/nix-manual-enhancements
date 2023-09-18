@@ -1,0 +1,36 @@
+name: Continuous Delivery
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  deliver:
+    name: Build the UserScript and create a GitHub release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@main
+        with:
+          fetch-depth: 0
+
+      - name: Setup CI/CD environment
+        uses: ./.github/actions/setup-env
+
+      - name: Build the UserScript
+        run: nix develop .#ci -c just build
+
+      - name: Generate changelog for GitHub release
+        id: changelog
+        run: |
+          VERSION="$(git describe --tags "$(git rev-list --tags --max-count=1)")"
+          echo ::set-output name=version::"$VERSION"
+          nix develop .#ci -c cog changelog --at "$VERSION" -t full_hash > GITHUB_CHANGELOG.md
+          nix develop .#ci -c bunx prettier --write GITHUB_CHANGELOG.md
+
+      - name: Create a GitHub release
+        uses: softprops/action-gh-release@v1
+        with:
+          body_path: GITHUB_CHANGELOG.md
+          tag_name: ${{ steps.changelog.outputs.version }}
+          files: dist/**

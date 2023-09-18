@@ -1,0 +1,25 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  lint:
+    name: Verify code and repository conventions
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@main
+        with:
+          fetch-depth: 0
+
+      - name: Setup CI/CD environment
+        uses: ./.github/actions/setup-env
+
+      - name: Run Just lint recipe
+        run: |
+          nix develop .#ci -c just lint

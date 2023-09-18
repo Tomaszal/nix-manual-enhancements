@@ -1,0 +1,41 @@
+name: Setup CI/CD environment
+
+description: Setup Nix Flake and Bun with dependencies
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Setup Nix cache
+      uses: actions/cache@v3
+      with:
+        path: /home/runner/nix
+        key: ${{ runner.os }}-nix-${{ hashFiles('flake.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-nix-
+
+    - name: Setup Nix Flake
+      uses: cachix/install-nix-action@v22
+      with:
+        # Fix for https://github.com/actions/cache/issues/749
+        extra_nix_config: |
+          store = /home/runner/nix
+
+    - name: Get Bun cache metadata
+      id: bun-cache
+      shell: bash
+      run: |
+        echo "CACHE_PATH=$(nix develop .#ci -c bun pm cache)" >> $GITHUB_OUTPUT
+        echo "CACHE_HASH=$(nix develop .#ci -c bun pm hash-print)" >> $GITHUB_OUTPUT
+
+    - name: Setup Bun cache
+      uses: actions/cache@v3
+      with:
+        path: ${{ steps.bun-cache.outputs.CACHE_PATH }}
+        key: ${{ runner.os }}-bun-store-${{ steps.bun-cache.outputs.CACHE_HASH }}
+        restore-keys: |
+          ${{ runner.os }}-bun-store-
+
+    - name: Install Bun dependencies
+      shell: bash
+      run: |
+        nix develop .#ci -c bun install --frozen-lockfile
