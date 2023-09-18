@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import monkey from 'vite-plugin-monkey';
+import packageJson from './package.json';
 
 const nixManualBaseUrl = 'https://nixos.org/manual';
 const nixManualChannels = ['stable', 'unstable'];
@@ -14,15 +15,21 @@ nixManualChannels.forEach((channel) => {
   });
 });
 
+const assetUrl = 'https://github.com/Tomaszal/nix-manual-enhancements/releases/latest/download';
+
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     react(),
     monkey({
       entry: 'src/main.tsx',
+      build: { metaFileName: true },
       userscript: {
         icon: 'https://nixos.org/favicon.png',
         match: nixManualUrls,
+        version: packageJson.version,
+        updateURL: `${assetUrl}/${packageJson.name}.meta.js`,
+        downloadURL: `${assetUrl}/${packageJson.name}.user.js`,
       },
     }),
   ],
