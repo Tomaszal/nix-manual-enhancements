@@ -4,6 +4,8 @@ import { getDefaultStore } from 'jotai';
 import { App } from './app';
 import { docbook, docbookHeader, header, topLevelToc } from './elements';
 import { Item, selectedItemAtom } from './state';
+import { create, insertMultiple } from '@orama/orama';
+import { OramaWithHighlight, afterInsert as highlightAfterInsert } from '@orama/plugin-match-highlight';
 import './main.css';
 
 // Save header height to a CSS variable
@@ -18,14 +20,19 @@ const title = (docbookHeader as HTMLElement).innerHTML
   .trim() // trim start & end spaces
   .replace(/\s+/g, ' '); // replace multiple spaces with one
 
-const getItemTree = (root: Element, toc: Element) =>
-  Array.from(toc.querySelectorAll('dl.toc > dt a')).map((link) => {
+const getItemTree = (props: { root: Element; toc: Element; parentBreadcrumbs?: string }) => {
+  const { root, toc, parentBreadcrumbs } = props;
+  return Array.from(toc.querySelectorAll('dl.toc > dt a')).map((link) => {
     const title = link.textContent;
     const href = link.attributes.getNamedItem('href')?.value;
 
     if (!title || !href) throw Error('Item elements not found');
 
-    const item: Item = { title, href };
+    let breadcrumbs = '';
+    if (parentBreadcrumbs) breadcrumbs += `${parentBreadcrumbs} » `;
+    breadcrumbs += title;
+
+    const item: Item = { title, breadcrumbs, href };
 
     if (href.includes('#')) {
       const anchor = href.substring(href.indexOf('#')).replaceAll('.', '\\.');
@@ -35,7 +42,7 @@ const getItemTree = (root: Element, toc: Element) =>
       toc?.remove();
 
       if (!body) throw Error(`Item body not found for ${href}`);
-      const children = !toc ? undefined : getItemTree(body, toc);
+      const children = !toc ? undefined : getItemTree({ root: body, toc, parentBreadcrumbs: breadcrumbs });
 
       item.body = body;
       item.children = children;
@@ -43,6 +50,7 @@ const getItemTree = (root: Element, toc: Element) =>
 
     return item;
   });
+};
 
 const flattenItemTree = (itemTree: Item[]): Item[] => {
   return itemTree.reduce<Item[]>((items, item) => items.concat(item, flattenItemTree(item.children ?? [])), []);
@@ -74,8 +82,30 @@ const selectAnchorItem = () => {
   });
 };
 
-const itemTree = getItemTree(docbook, topLevelToc);
+const buildSearchIndex = async (items: Item[]) => {
+  const searchIndex = (await create({
+    schema: {
+      title: 'string',
+      body: 'string',
+    },
+    language: 'english',
+    components: { afterInsert: [highlightAfterInsert] },
+  })) as OramaWithHighlight;
+
+  await insertMultiple(
+    searchIndex,
+    items.map((item) => {
+      const { title, body } = item;
+      return { item, title, body: body?.textContent?.replace(/\s+/g, ' ').trim() ?? '' };
+    }),
+  );
+
+  return searchIndex;
+};
+
+const itemTree = getItemTree({ root: docbook, toc: topLevelToc });
 const items: Item[] = flattenItemTree(itemTree);
+const searchIndex = await buildSearchIndex(items);
 
 getDefaultStore().set(selectedItemAtom, items[0]);
 setupItemMetadata();
@@ -85,6 +115,6 @@ window.addEventListener('hashchange', selectAnchorItem);
 
 ReactDOM.createRoot(docbook).render(
   <React.StrictMode>
-    <App title={title} itemTree={itemTree} />
+    <App title={title} itemTree={itemTree} searchIndex={searchIndex} />
   </React.StrictMode>,
 );

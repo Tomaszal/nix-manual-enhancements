@@ -122,3 +122,42 @@ main,
 .navButton:hover {
   color: black;
 }
+
+#search {
+  margin: 1rem 0;
+}
+
+#search input {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  background: #fafafa;
+  border: 1px solid #aaa;
+  border-radius: 3px;
+}
+
+#search-title {
+  padding: 1rem 0.5rem 0;
+  color: #666;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+#search-results {
+  padding: 0.5rem;
+  padding-left: 2rem;
+  border-bottom: 1px dashed #888;
+}
+
+.search-result {
+  margin-bottom: 0.5rem;
+}
+
+.search-result a {
+  border-bottom: none;
+  font-size: 1rem;
+  font-weight: bolder;
+}
+
+.search-result div {
+  margin-left: 1rem;
+}

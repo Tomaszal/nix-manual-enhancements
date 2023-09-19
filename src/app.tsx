@@ -1,12 +1,16 @@
 import { useAtom } from 'jotai';
 import React, { useState } from 'react';
 import { Item, selectedItemAtom } from './state';
-import { FiMenu } from 'react-icons/fi';
+import { FiMenu, FiSearch } from 'react-icons/fi';
+import { type OramaWithHighlight } from '@orama/plugin-match-highlight';
+import { Search } from './search';
 
-export const App = (props: { title: string; itemTree: Item[] }) => {
-  const { title, itemTree } = props;
+export const App = (props: { title: string; itemTree: Item[]; searchIndex: OramaWithHighlight }) => {
+  const { title, itemTree, searchIndex } = props;
   const [selectedItem] = useAtom(selectedItemAtom);
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [searchActive, setSearchActive] = useState(false);
+
   return (
     <>
       <div style={{ maxWidth: sidebarOpen ? 'var(--sidebar-width)' : 0 }} id='toc'>
@@ -18,16 +22,25 @@ export const App = (props: { title: string; itemTree: Item[] }) => {
       <div id='navbar'>
         <FiMenu className='navButton' onClick={() => void setSidebarOpen((state) => !state)} />
 
+        <FiSearch
+          className='navButton'
+          onClick={() =>
+            void setSearchActive((state) => {
+              const newState = !state;
+              if (newState) window.scrollTo({ top: 0, behavior: 'smooth' });
+              return newState;
+            })
+          }
+        />
+
         <span style={{ flexGrow: 1 }}>{title}</span>
       </div>
 
-      {selectedItem?.body !== undefined && (
-        <div
-          id='content'
-          className='generic-layout'
-          dangerouslySetInnerHTML={{ __html: selectedItem.body.innerHTML }}
-        />
-      )}
+      <div id='content' className='generic-layout'>
+        {searchActive && <Search searchIndex={searchIndex} onNavigate={() => void setSearchActive(false)} />}
+
+        {selectedItem?.body !== undefined && <div dangerouslySetInnerHTML={{ __html: selectedItem.body.innerHTML }} />}
+      </div>
     </>
   );
 };
