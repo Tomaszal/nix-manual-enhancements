@@ -1,3 +1,8 @@
+:root {
+  --navbar-height: 47px;
+  --sidebar-width: 300px;
+}
+
 body {
   display: grid;
   grid-template-areas: 'header header' 'toc navbar' 'toc content' 'toc footer';
@@ -18,11 +23,18 @@ footer {
 }
 
 #navbar {
+  position: sticky;
+  top: var(--header-height);
+
+  background: white;
   border-bottom: 0.0625rem solid rgba(0, 0, 0, 0.2);
+
+  display: flex;
+  align-items: center;
 
   font-size: 18px;
   text-align: center;
-  line-height: 46px;
+  line-height: calc(var(--navbar-height) - 1px);
 }
 
 #toc {
@@ -30,16 +42,21 @@ footer {
   top: var(--header-height);
   grid-area: toc;
   height: calc(100vh - var(--header-height));
-  width: 300px;
+  width: var(--sidebar-width);
   overflow: auto;
 
   background: #fafafa;
   color: black;
-  border-right: 0.0625rem solid rgba(0, 0, 0, 0.2);
 
-  padding: 1.25rem 1rem;
   font-size: 14px;
   word-break: break-word;
+
+  transition: max-width 200ms;
+}
+
+#toc > div {
+  padding: 1.25rem 1rem;
+  border-right: 0.0625rem solid rgba(0, 0, 0, 0.2);
 }
 
 #toc ol {
@@ -47,7 +64,7 @@ footer {
   list-style: none outside none;
 }
 
-#toc > ol {
+#toc > div > ol {
   padding-left: 0;
 }
 
@@ -81,7 +98,7 @@ footer {
 
 #content * {
   /* Fix anchor link snapping */
-  scroll-margin-top: var(--header-height);
+  scroll-margin-top: calc(var(--header-height) + var(--navbar-height));
 }
 
 footer {
@@ -93,4 +110,15 @@ main,
 .docbook-page,
 .docbook {
   display: contents;
+}
+
+.navButton {
+  transition: color 200ms;
+  cursor: pointer;
+  color: #747474;
+  margin-left: 1rem;
+}
+
+.navButton:hover {
+  color: black;
 }

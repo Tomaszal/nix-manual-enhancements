@@ -1,17 +1,25 @@
 import { useAtom } from 'jotai';
-import React from 'react';
+import React, { useState } from 'react';
 import { Item, selectedItemAtom } from './state';
+import { FiMenu } from 'react-icons/fi';
 
 export const App = (props: { title: string; itemTree: Item[] }) => {
   const { title, itemTree } = props;
   const [selectedItem] = useAtom(selectedItemAtom);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
   return (
     <>
-      <div id='toc'>
-        <ItemTree itemTree={itemTree} />
+      <div style={{ maxWidth: sidebarOpen ? 'var(--sidebar-width)' : 0 }} id='toc'>
+        <div>
+          <ItemTree itemTree={itemTree} />
+        </div>
       </div>
 
-      <div id='navbar'>{title}</div>
+      <div id='navbar'>
+        <FiMenu className='navButton' onClick={() => void setSidebarOpen((state) => !state)} />
+
+        <span style={{ flexGrow: 1 }}>{title}</span>
+      </div>
 
       {selectedItem?.body !== undefined && (
         <div

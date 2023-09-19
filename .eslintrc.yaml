@@ -32,3 +32,10 @@ rules:
   '@typescript-eslint/consistent-type-definitions':
     - error
     - type
+
+  # Allow void operator for void expressions
+  '@typescript-eslint/no-confusing-void-expression':
+    - error
+    - ignoreVoidOperator: true
+  '@typescript-eslint/no-meaningless-void-operator':
+    - off
