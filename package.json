@@ -5,6 +5,7 @@
   "dependencies": {
     "@orama/orama": "^1.2.4",
     "@orama/plugin-match-highlight": "^1.2.4",
+    "darkreader": "^4.9.58",
     "jotai": "^2.4.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

@@ -23,7 +23,15 @@ export default defineConfig({
     react(),
     monkey({
       entry: 'src/main.tsx',
-      build: { metaFileName: true },
+      build: {
+        metaFileName: true,
+        // GM_addStyle breaks Dark Reader for some reason, so insert CSS manually instead
+        cssSideEffects: () => (css: string) => {
+          const style = document.createElement('style');
+          style.textContent = css;
+          document.head.append(style);
+        },
+      },
       userscript: {
         icon: 'https://nixos.org/favicon.png',
         match: nixManualUrls,

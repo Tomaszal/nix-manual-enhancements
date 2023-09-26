@@ -4,6 +4,7 @@ import { Item, selectedItemAtom } from './state';
 import { FiMenu, FiSearch } from 'react-icons/fi';
 import { type OramaWithHighlight } from '@orama/plugin-match-highlight';
 import { Search } from './search';
+import { DarkModeToggle } from './dark-mode';
 
 export const App = (props: { title: string; itemTree: Item[]; searchIndex: OramaWithHighlight }) => {
   const { title, itemTree, searchIndex } = props;
@@ -21,6 +22,8 @@ export const App = (props: { title: string; itemTree: Item[]; searchIndex: Orama
 
       <div id='navbar'>
         <FiMenu className='navButton' onClick={() => void setSidebarOpen((state) => !state)} />
+
+        <DarkModeToggle />
 
         <FiSearch
           className='navButton'
