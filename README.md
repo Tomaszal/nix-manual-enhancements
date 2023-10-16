@@ -15,7 +15,7 @@ This is a userscript that introduces some user experience enhancements to the Ni
 
 ## Installation
 
-1. Install a userscript management browser extension (tested with [Tampermonkey](https://www.tampermonkey.net/)).eee
+1. Install a userscript management browser extension (tested with [Tampermonkey](https://www.tampermonkey.net/)).
 2. Open the [nix-manual-enhancements.user.js](https://github.com/Tomaszal/nix-manual-enhancements/releases/latest/download/nix-manual-enhancements.user.js) file in the [latest release](https://github.com/Tomaszal/nix-manual-enhancements/releases/latest).
 3. The userscript manager should appear, where you simply need to click "Install".
 4. **IMPORTANT (Firefox only)**: enable `layout.css.has-selector.enabled` flag in [`about:config`](about:config).
