@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file. See [conven
 
 <!-- prettier-ignore-start -->
 - - -
+## [0.2.0](https://github.com/Tomaszal/nix-manual-enhancements/compare/0.1.0..0.2.0) - 2023-10-16
+#### Documentation
+- do not format auto generated changelog marks - ([d9c8d71](https://github.com/Tomaszal/nix-manual-enhancements/commit/d9c8d71af9123105def19c1b5ac2833f64d06738)) - [@Tomaszal](https://github.com/Tomaszal)
+- add a readme - ([d143c29](https://github.com/Tomaszal/nix-manual-enhancements/commit/d143c296520d315efe094c879030f250b8ba0fbe)) - [@Tomaszal](https://github.com/Tomaszal)
+#### Features
+- add dark mode - ([0df673c](https://github.com/Tomaszal/nix-manual-enhancements/commit/0df673c1c8082eda43901771d024e82875eb0c77)) - [@Tomaszal](https://github.com/Tomaszal)
+- add search functionality - ([53f7d30](https://github.com/Tomaszal/nix-manual-enhancements/commit/53f7d30492402d5e214d983e2081270afbd2588c)) - [@Tomaszal](https://github.com/Tomaszal)
+- add a sidebar toggle - ([1f903d2](https://github.com/Tomaszal/nix-manual-enhancements/commit/1f903d2f9bbb9f494f4751e94be4bdb557ab56dc)) - [@Tomaszal](https://github.com/Tomaszal)
+- setup metadata for auto updates - ([ca92590](https://github.com/Tomaszal/nix-manual-enhancements/commit/ca9259065c7e1deaffbadc6f2d65e8abd6ee6d3f)) - [@Tomaszal](https://github.com/Tomaszal)
+
+- - -
+
 
 ## [0.1.0](https://github.com/Tomaszal/nix-manual-enhancements/compare/8cc145f0114dc61648bc77fb7ca621515f42cc36..0.1.0) - 2023-09-18
 
